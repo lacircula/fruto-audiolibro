@@ -3,173 +3,328 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#5b4b8a">
-  <meta name="description" content="Fruto — Audiolibro por semanas">
+  <meta name="theme-color" content="#7d6b91">
+  <meta name="description" content="Fruto — Audiolibro de La Círcula">
 
-  <title>Fruto — Audiolibro</title>
+  <title>FRUTO · Audiolibro</title>
 
   <!-- FAVICON -->
-  <!-- Coloca tu archivo favicon.ico en la misma carpeta que este index.html -->
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 
   <style>
     :root {
-      --morado: #5b4b8a;
-      --morado-oscuro: #403362;
-      --morado-claro: #eee8f7;
-      --lavanda: #f8f5fb;
-      --texto: #302b38;
-      --gris: #706b75;
-      --blanco: #ffffff;
-      --verde: #4c9a70;
-      --borde: #e4ddec;
-      --sombra: 0 8px 25px rgba(64, 51, 98, 0.10);
+      --morado: #806d96;
+      --morado-oscuro: #554765;
+      --morado-profundo: #40334d;
+      --morado-palido: #c9bfd2;
+      --naranja: #e83d22;
+      --naranja-oscuro: #c92e19;
+      --crema: #f5f0e9;
+      --papel: #faf8f3;
+      --texto: #352d37;
+      --gris: #756d76;
+      --blanco: #fffdf9;
+      --borde: rgba(64, 51, 77, .16);
+      --sombra: 0 12px 30px rgba(64, 51, 77, .14);
     }
 
     * {
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      background: var(--lavanda);
       color: var(--texto);
-      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(circle at 10% 5%, rgba(232,61,34,.08) 0 90px, transparent 91px),
+        radial-gradient(circle at 93% 35%, rgba(128,109,150,.12) 0 120px, transparent 121px),
+        var(--crema);
+      font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
       line-height: 1.5;
     }
 
-    .container {
-      width: min(920px, calc(100% - 32px));
-      margin: 0 auto;
-      padding: 24px 0 40px;
+    /* Textura sutil para conservar el aire editorial/artesanal */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .20;
+      background-image:
+        radial-gradient(rgba(64,51,77,.16) .5px, transparent .5px);
+      background-size: 7px 7px;
+      mix-blend-mode: multiply;
     }
 
-    /* ENCABEZADO */
+    .container {
+      width: min(1000px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 22px 0 45px;
+      position: relative;
+    }
+
+    /* =========================
+       HERO / BANNER
+       ========================= */
+
     .hero {
-      background: var(--blanco);
-      border: 1px solid var(--borde);
-      border-radius: 20px;
+      position: relative;
       overflow: hidden;
+      background: var(--morado);
+      border-radius: 7px 7px 70px 7px;
       box-shadow: var(--sombra);
-      margin-bottom: 22px;
+      margin-bottom: 24px;
+      border: 1px solid rgba(64,51,77,.12);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 230px;
+      height: 230px;
+      right: -80px;
+      bottom: -105px;
+      background: var(--naranja);
+      border-radius: 65% 35% 70% 30%;
+      transform: rotate(-16deg);
+      opacity: .95;
+      pointer-events: none;
     }
 
     .hero-banner {
       width: 100%;
-      height: 260px;
+      height: 330px;
       object-fit: cover;
       display: block;
-      background: var(--morado-claro);
+      background: var(--morado);
     }
 
     .hero-content {
+      position: relative;
+      padding: 24px 24px 30px;
       text-align: center;
-      padding: 22px 24px 26px;
+      color: var(--blanco);
+      z-index: 2;
     }
 
-    .logo {
-      width: 95px;
-      height: 95px;
+    .hero-logo {
+      width: 112px;
+      height: 112px;
       object-fit: contain;
       display: block;
-      margin: -65px auto 8px;
+      margin: -72px auto 7px;
       position: relative;
-      background: white;
-      border-radius: 50%;
-      padding: 8px;
-      border: 1px solid var(--borde);
+      z-index: 3;
+      filter: drop-shadow(0 5px 8px rgba(0,0,0,.16));
     }
 
-    h1 {
-      margin: 4px 0 2px;
-      font-size: clamp(2rem, 5vw, 3rem);
-      color: var(--morado-oscuro);
-      letter-spacing: 1px;
+    .fruto-title {
+      margin: 0;
+      color: var(--blanco);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.6rem, 7vw, 5rem);
+      font-weight: 900;
+      letter-spacing: .14em;
+      line-height: .95;
+      text-shadow: 2px 2px 0 rgba(64,51,77,.20);
+    }
+
+    .fruto-title span {
+      color: var(--naranja);
     }
 
     .subtitle {
-      color: var(--gris);
-      margin: 0 auto 14px;
-      max-width: 600px;
+      margin: 10px auto 16px;
+      max-width: 650px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.05rem;
+      font-style: italic;
+      color: #f4edf8;
     }
 
     .week-badge {
       display: inline-block;
-      background: var(--morado);
+      padding: 8px 17px;
+      background: var(--naranja);
       color: white;
-      padding: 7px 15px;
-      border-radius: 999px;
-      font-size: 0.9rem;
-      font-weight: 600;
+      border-radius: 4px 18px 4px 18px;
+      font-size: .86rem;
+      font-weight: 800;
+      letter-spacing: .04em;
+      transform: rotate(-1deg);
     }
 
-    /* REPRODUCTOR */
-    .player-card {
-      background: var(--blanco);
-      border: 1px solid var(--borde);
-      border-radius: 18px;
-      box-shadow: var(--sombra);
-      padding: 20px;
-      display: grid;
-      grid-template-columns: 130px 1fr;
-      gap: 22px;
+    /* =========================
+       SEPARADOR
+       ========================= */
+
+    .section-kicker {
+      display: flex;
       align-items: center;
-      margin-bottom: 22px;
+      gap: 12px;
+      margin: 0 0 12px;
+      color: var(--morado-oscuro);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.65rem;
+      font-weight: 700;
+    }
+
+    .section-kicker::after {
+      content: "";
+      height: 2px;
+      flex: 1;
+      background: var(--naranja);
+      transform: rotate(-1deg);
+    }
+
+    /* =========================
+       REPRODUCTOR
+       ========================= */
+
+    .player-card {
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 28px;
+      align-items: center;
+      background: var(--morado);
+      color: white;
+      padding: 24px;
+      margin-bottom: 28px;
+      border-radius: 12px 55px 12px 35px;
+      box-shadow: var(--sombra);
+    }
+
+    .player-card::before,
+    .player-card::after {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+      border-radius: 60% 40% 55% 45%;
+      background: var(--naranja);
+      opacity: .95;
+    }
+
+    .player-card::before {
+      width: 115px;
+      height: 115px;
+      right: -25px;
+      top: -55px;
+      transform: rotate(28deg);
+    }
+
+    .player-card::after {
+      width: 80px;
+      height: 180px;
+      left: -48px;
+      bottom: -90px;
+      transform: rotate(-25deg);
+    }
+
+    .cover-wrap {
+      position: relative;
+      z-index: 2;
     }
 
     .cover {
-      width: 130px;
-      height: 130px;
+      width: 100%;
+      aspect-ratio: 1 / 1;
       object-fit: cover;
-      border-radius: 14px;
-      background: var(--morado-claro);
-      border: 1px solid var(--borde);
+      display: block;
+      border: 7px solid var(--crema);
+      box-shadow: 10px 12px 0 rgba(232,61,34,.95);
+      border-radius: 4px 22px 4px 22px;
+      background: var(--morado-palido);
+    }
+
+    .player-info {
+      position: relative;
+      z-index: 2;
     }
 
     .episode-label {
-      color: var(--morado);
-      font-size: 0.9rem;
-      font-weight: 700;
-      margin-bottom: 3px;
+      color: #f8d9d2;
+      font-size: .82rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      margin-bottom: 5px;
     }
 
     .player-card h2 {
-      margin: 0 0 12px;
-      color: var(--morado-oscuro);
-      font-size: 1.5rem;
+      margin: 0 0 14px;
+      color: var(--blanco);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      line-height: 1.08;
+    }
+
+    .player-intro {
+      color: #eee7f2;
+      font-size: .95rem;
+      margin: 0 0 18px;
+      max-width: 560px;
     }
 
     audio {
       width: 100%;
+      height: 42px;
+      accent-color: var(--naranja);
     }
 
     .player-note {
-      color: var(--gris);
-      font-size: 0.85rem;
-      margin: 9px 0 0;
+      color: #e6dfea;
+      font-size: .78rem;
+      margin: 10px 0 0;
     }
 
-    /* LISTA DE EPISODIOS */
-    .episodes-card {
-      background: var(--blanco);
+    .error-message {
+      background: #fff1ee;
+      color: #8b2f21;
+      border: 1px solid #eab7ae;
+      padding: 10px 12px;
+      border-radius: 7px;
+      margin-top: 10px;
+      display: none;
+      font-size: .82rem;
+    }
+
+    /* =========================
+       LISTA DE EPISODIOS
+       ========================= */
+
+    .episodes-section {
+      background: rgba(255,253,249,.78);
       border: 1px solid var(--borde);
-      border-radius: 18px;
-      box-shadow: var(--sombra);
-      padding: 20px;
+      padding: 22px;
+      border-radius: 7px 35px 7px 25px;
+      box-shadow: 0 7px 22px rgba(64,51,77,.07);
     }
 
-    .episodes-card h2 {
-      margin: 0 0 14px;
-      color: var(--morado-oscuro);
+    .episodes-subtitle {
+      margin: -4px 0 14px;
+      color: var(--gris);
+      font-size: .9rem;
     }
 
     .episode {
       display: grid;
-      grid-template-columns: 42px 1fr auto;
-      gap: 12px;
+      grid-template-columns: 52px 1fr auto;
+      gap: 13px;
       align-items: center;
-      padding: 12px 4px;
-      border-top: 1px solid var(--borde);
+      padding: 13px 10px;
+      border-top: 1px solid rgba(64,51,77,.13);
+      transition: transform .18s ease, background .18s ease;
+    }
+
+    .episode:hover {
+      transform: translateX(3px);
+      background: rgba(128,109,150,.07);
     }
 
     .episode:first-of-type {
@@ -177,98 +332,150 @@
     }
 
     .episode-number {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
+      width: 40px;
+      height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--morado-claro);
+      border-radius: 50%;
+      background: var(--morado-palido);
       color: var(--morado-oscuro);
+      font-family: Georgia, "Times New Roman", serif;
       font-weight: 700;
-    }
-
-    .episode-title {
-      font-weight: 600;
-    }
-
-    .episode-status {
-      font-size: 0.85rem;
-      color: var(--gris);
+      position: relative;
     }
 
     .episode.unlocked .episode-number {
-      background: var(--morado);
+      background: var(--naranja);
       color: white;
     }
 
     .episode.current {
-      background: #faf8fd;
-      border-radius: 10px;
-      padding-left: 10px;
-      padding-right: 10px;
+      background: var(--morado);
+      color: white;
+      border-radius: 6px 22px 6px 18px;
+      border-top-color: transparent;
+      margin: 3px 0;
+    }
+
+    .episode.current .episode-status {
+      color: #eadff0;
+    }
+
+    .episode-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.02rem;
+      font-weight: 700;
+    }
+
+    .episode-status {
+      color: var(--gris);
+      font-size: .78rem;
+      margin-top: 2px;
     }
 
     .status-icon {
-      font-size: 1.1rem;
       min-width: 30px;
       text-align: center;
+      font-size: 1rem;
     }
 
     .footer {
       text-align: center;
       color: var(--gris);
-      font-size: 0.85rem;
-      padding: 24px 10px 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-style: italic;
+      font-size: .86rem;
+      padding: 25px 10px 0;
     }
 
-    .error-message {
-      background: #fff4f4;
-      color: #8a3b3b;
-      border: 1px solid #efd0d0;
-      padding: 10px 12px;
-      border-radius: 10px;
-      margin-top: 10px;
-      display: none;
-      font-size: 0.85rem;
+    .footer strong {
+      color: var(--naranja);
     }
 
-    @media (max-width: 650px) {
+    /* =========================
+       RESPONSIVE
+       ========================= */
+
+    @media (max-width: 700px) {
       .container {
-        width: min(100% - 20px, 920px);
-        padding-top: 10px;
+        width: min(100% - 16px, 1000px);
+        padding-top: 9px;
+      }
+
+      .hero {
+        border-radius: 5px 5px 45px 5px;
       }
 
       .hero-banner {
-        height: 180px;
+        height: 220px;
       }
 
-      .logo {
-        width: 82px;
-        height: 82px;
-        margin-top: -45px;
+      .hero-logo {
+        width: 90px;
+        height: 90px;
+        margin-top: -55px;
       }
 
       .hero-content {
-        padding: 15px 16px 20px;
+        padding: 18px 15px 25px;
+      }
+
+      .fruto-title {
+        font-size: 3rem;
+      }
+
+      .subtitle {
+        font-size: .94rem;
       }
 
       .player-card {
         grid-template-columns: 1fr;
-        text-align: center;
+        gap: 23px;
+        padding: 18px;
+        border-radius: 8px 35px 8px 25px;
       }
 
       .cover {
+        width: min(72vw, 260px);
         margin: 0 auto;
       }
 
+      .player-info {
+        text-align: center;
+      }
+
+      .player-intro {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .episodes-section {
+        padding: 15px;
+        border-radius: 6px 25px 6px 18px;
+      }
+
       .episode {
-        grid-template-columns: 36px 1fr auto;
+        grid-template-columns: 40px 1fr 25px;
         gap: 8px;
+        padding: 12px 5px;
+      }
+
+      .episode-number {
+        width: 34px;
+        height: 34px;
+      }
+
+      .episode-title {
+        font-size: .92rem;
       }
 
       .episode-status {
-        font-size: 0.75rem;
+        font-size: .72rem;
+      }
+
+      .section-kicker {
+        font-size: 1.4rem;
       }
     }
   </style>
@@ -283,22 +490,35 @@
          ========================= -->
     <section class="hero">
 
-      <!-- Banner de la semana actual.
-           Cambia automáticamente según SEMANA_ACTUAL -->
-      <img id="heroBanner" class="hero-banner" src="" alt="Banner de Fruto">
+      <!--
+        BANNER:
+        banners/banner-semana-01.jpg
+        banners/banner-semana-02.jpg
+        ...
+        banners/banner-semana-15.jpg
+      -->
+      <img id="heroBanner"
+           class="hero-banner"
+           src=""
+           alt="Banner de Fruto">
 
-      <!-- Tu logo -->
       <div class="hero-content">
-        <img class="logo" src="logo.png" alt="Logo de Fruto">
 
-        <h1>FRUTO</h1>
+        <!-- Tu logo de FRUTO -->
+        <img class="hero-logo"
+             src="logo.png"
+             alt="Logo de Fruto">
+
+        <h1 class="fruto-title">FRU<span>T</span>O</h1>
+
         <p class="subtitle">
-          Audiolibro · Un viaje de historias que florecen semana a semana.
+          Audiolibro de La Círcula · una historia que florece semana a semana.
         </p>
 
         <div class="week-badge">
-          Semana actual: <span id="currentWeek"></span> de 15
+          SEMANA <span id="currentWeek"></span> · 15
         </div>
+
       </div>
     </section>
 
@@ -306,65 +526,94 @@
     <!-- =========================
          REPRODUCTOR
          ========================= -->
+    <div class="section-kicker">
+      Escuchar
+    </div>
+
     <section class="player-card">
 
-      <img id="episodeCover" class="cover" src="" alt="Portada del episodio">
+      <div class="cover-wrap">
+        <!--
+          PORTADA:
+          portadas/portada-semana-01.jpg
+          portadas/portada-semana-02.jpg
+          ...
+          portadas/portada-semana-15.jpg
+        -->
+        <img id="episodeCover"
+             class="cover"
+             src=""
+             alt="Portada del episodio">
+      </div>
 
-      <div>
+      <div class="player-info">
+
         <div class="episode-label">
-          Semana <span id="playerWeek"></span>
+          Capítulo · Semana <span id="playerWeek"></span>
         </div>
 
-        <h2 id="episodeTitle">Cargando episodio...</h2>
+        <h2 id="episodeTitle">
+          Cargando episodio...
+        </h2>
+
+        <p class="player-intro">
+          Ponte cómoda, dale play y deja que la historia encuentre su propio ritmo.
+        </p>
 
         <audio id="audioPlayer" controls preload="metadata">
           Tu navegador no puede reproducir este audio.
         </audio>
 
         <p class="player-note">
-          Este episodio está disponible para su reproducción.
+          ✦ Episodio disponible para la semana actual.
         </p>
 
         <div id="audioError" class="error-message">
           No se encontró el archivo de audio. Revisa que el nombre y la ubicación
           coincidan con la estructura indicada.
         </div>
-      </div>
 
+      </div>
     </section>
 
 
     <!-- =========================
-         LISTA DE 15 SEMANAS
+         LISTA
          ========================= -->
-    <section class="episodes-card">
-      <h2>Episodios</h2>
+    <section class="episodes-section">
+
+      <div class="section-kicker">
+        El recorrido
+      </div>
+
+      <p class="episodes-subtitle">
+        Cada semana se abre un nuevo fragmento de <em>Fruto</em>.
+      </p>
+
       <div id="episodeList"></div>
+
     </section>
 
 
     <footer class="footer">
-      FRUTO Audiolibro · Un proyecto de historias que florecen.
+      <strong>FRUTO</strong> · Audiolibro de La Círcula
     </footer>
 
   </main>
 
 
   <script>
+
     /*
     ==========================================================
     CONFIGURACIÓN PRINCIPAL
-    ==========================================================
 
-    CADA SEMANA SOLO TIENES QUE CAMBIAR ESTE NÚMERO.
+    Solo cambia este número cada semana:
 
-    Ejemplo:
-      semana 1 → const SEMANA_ACTUAL = 1;
-      semana 2 → const SEMANA_ACTUAL = 2;
-      semana 3 → const SEMANA_ACTUAL = 3;
-
-    Al cambiarlo, automáticamente se habilitan todas las
-    semanas anteriores y la nueva semana.
+      semana 1  → 1
+      semana 2  → 2
+      ...
+      semana 15 → 15
     ==========================================================
     */
 
@@ -373,33 +622,32 @@
 
     /*
     ==========================================================
-    INFORMACIÓN DE LOS 15 EPISODIOS
+    INFORMACIÓN DE LOS EPISODIOS
     ==========================================================
-    Puedes cambiar los títulos cuando los tengas.
     */
 
     const episodios = [
-      { semana: 1, titulo: "Título del episodio 1" },
-      { semana: 2, titulo: "Título del episodio 2" },
-      { semana: 3, titulo: "Título del episodio 3" },
-      { semana: 4, titulo: "Título del episodio 4" },
-      { semana: 5, titulo: "Título del episodio 5" },
-      { semana: 6, titulo: "Título del episodio 6" },
-      { semana: 7, titulo: "Título del episodio 7" },
-      { semana: 8, titulo: "Título del episodio 8" },
-      { semana: 9, titulo: "Título del episodio 9" },
-      { semana: 10, titulo: "Título del episodio 10" },
-      { semana: 11, titulo: "Título del episodio 11" },
-      { semana: 12, titulo: "Título del episodio 12" },
-      { semana: 13, titulo: "Título del episodio 13" },
-      { semana: 14, titulo: "Título del episodio 14" },
-      { semana: 15, titulo: "Título del episodio 15" }
+      { semana: 1,  titulo: "Semana 1" },
+      { semana: 2,  titulo: "Semana 2" },
+      { semana: 3,  titulo: "Semana 3" },
+      { semana: 4,  titulo: "Semana 4" },
+      { semana: 5,  titulo: "Semana 5" },
+      { semana: 6,  titulo: "Semana 6" },
+      { semana: 7,  titulo: "Semana 7" },
+      { semana: 8,  titulo: "Semana 8" },
+      { semana: 9,  titulo: "Semana 9" },
+      { semana: 10, titulo: "Semana 10" },
+      { semana: 11, titulo: "Semana 11" },
+      { semana: 12, titulo: "Semana 12" },
+      { semana: 13, titulo: "Semana 13" },
+      { semana: 14, titulo: "Semana 14" },
+      { semana: 15, titulo: "Semana 15" }
     ];
 
 
     /*
     ==========================================================
-    GENERACIÓN DE RUTAS
+    RUTAS DE ARCHIVOS
     ==========================================================
     */
 
@@ -422,7 +670,7 @@
 
     /*
     ==========================================================
-    CARGAR EPISODIO ACTUAL
+    CARGAR SEMANA ACTUAL
     ==========================================================
     */
 
@@ -446,7 +694,7 @@
 
     /*
     ==========================================================
-    LISTA DE EPISODIOS
+    LISTA DE LAS 15 SEMANAS
     ==========================================================
     */
 
@@ -469,13 +717,13 @@
 
       if (actual) {
         icono = "▶";
-        estado = "Disponible ahora";
+        estado = "Disponible esta semana";
       } else if (disponible) {
         icono = "✓";
         estado = "Disponible";
       } else {
-        icono = "🔒";
-        estado = "Disponible próximamente";
+        icono = "✦";
+        estado = "Próximamente";
       }
 
       elemento.innerHTML = `
@@ -499,7 +747,7 @@
 
     /*
     ==========================================================
-    AVISO SI NO SE ENCUENTRA EL AUDIO
+    ERROR DE AUDIO
     ==========================================================
     */
 
