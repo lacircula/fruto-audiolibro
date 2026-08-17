@@ -90,10 +90,10 @@ const episodios = [
 {semana:15,titulo:"Título del episodio 15"}
 ];
 
-function n(n){return String(n).padStart(2,"0")}
-function audio(n){return `./audios/semana-${n(n)}.mp3`}
-function banner(n){return `./banners/banner-semana-${n(n)}.jpg`}
-function portada(n){return `./portadas/portada-semana-${n(n)}.jpg`}
+function numeroSemana(numero){return String(numero).padStart(2,"0")}
+function audio(numero){return `./audios/semana-${numeroSemana(numero)}.mp3`}
+function banner(numero){return `./banners/banner-semana-${numeroSemana(numero)}.jpg`}
+function portada(numero){return `./portadas/portada-semana-${numeroSemana(numero)}.jpg`}
 
 const actual=episodios[SEMANA_ACTUAL-1];
 const player=document.getElementById("audioPlayer");
