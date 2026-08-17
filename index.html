@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#5b4b8a">
+  <meta name="description" content="Fruto — Audiolibro por semanas">
+
+  <title>Fruto — Audiolibro</title>
+
+  <!-- FAVICON -->
+  <!-- Coloca tu archivo favicon.ico en la misma carpeta que este index.html -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <style>
+    :root {
+      --morado: #5b4b8a;
+      --morado-oscuro: #403362;
+      --morado-claro: #eee8f7;
+      --lavanda: #f8f5fb;
+      --texto: #302b38;
+      --gris: #706b75;
+      --blanco: #ffffff;
+      --verde: #4c9a70;
+      --borde: #e4ddec;
+      --sombra: 0 8px 25px rgba(64, 51, 98, 0.10);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--lavanda);
+      color: var(--texto);
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    .container {
+      width: min(920px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 40px;
+    }
+
+    /* ENCABEZADO */
+    .hero {
+      background: var(--blanco);
+      border: 1px solid var(--borde);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--sombra);
+      margin-bottom: 22px;
+    }
+
+    .hero-banner {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      display: block;
+      background: var(--morado-claro);
+    }
+
+    .hero-content {
+      text-align: center;
+      padding: 22px 24px 26px;
+    }
+
+    .logo {
+      width: 95px;
+      height: 95px;
+      object-fit: contain;
+      display: block;
+      margin: -65px auto 8px;
+      position: relative;
+      background: white;
+      border-radius: 50%;
+      padding: 8px;
+      border: 1px solid var(--borde);
+    }
+
+    h1 {
+      margin: 4px 0 2px;
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--morado-oscuro);
+      letter-spacing: 1px;
+    }
+
+    .subtitle {
+      color: var(--gris);
+      margin: 0 auto 14px;
+      max-width: 600px;
+    }
+
+    .week-badge {
+      display: inline-block;
+      background: var(--morado);
+      color: white;
+      padding: 7px 15px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    /* REPRODUCTOR */
+    .player-card {
+      background: var(--blanco);
+      border: 1px solid var(--borde);
+      border-radius: 18px;
+      box-shadow: var(--sombra);
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 22px;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+
+    .cover {
+      width: 130px;
+      height: 130px;
+      object-fit: cover;
+      border-radius: 14px;
+      background: var(--morado-claro);
+      border: 1px solid var(--borde);
+    }
+
+    .episode-label {
+      color: var(--morado);
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+
+    .player-card h2 {
+      margin: 0 0 12px;
+      color: var(--morado-oscuro);
+      font-size: 1.5rem;
+    }
+
+    audio {
+      width: 100%;
+    }
+
+    .player-note {
+      color: var(--gris);
+      font-size: 0.85rem;
+      margin: 9px 0 0;
+    }
+
+    /* LISTA DE EPISODIOS */
+    .episodes-card {
+      background: var(--blanco);
+      border: 1px solid var(--borde);
+      border-radius: 18px;
+      box-shadow: var(--sombra);
+      padding: 20px;
+    }
+
+    .episodes-card h2 {
+      margin: 0 0 14px;
+      color: var(--morado-oscuro);
+    }
+
+    .episode {
+      display: grid;
+      grid-template-columns: 42px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 4px;
+      border-top: 1px solid var(--borde);
+    }
+
+    .episode:first-of-type {
+      border-top: 0;
+    }
+
+    .episode-number {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--morado-claro);
+      color: var(--morado-oscuro);
+      font-weight: 700;
+    }
+
+    .episode-title {
+      font-weight: 600;
+    }
+
+    .episode-status {
+      font-size: 0.85rem;
+      color: var(--gris);
+    }
+
+    .episode.unlocked .episode-number {
+      background: var(--morado);
+      color: white;
+    }
+
+    .episode.current {
+      background: #faf8fd;
+      border-radius: 10px;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    .status-icon {
+      font-size: 1.1rem;
+      min-width: 30px;
+      text-align: center;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--gris);
+      font-size: 0.85rem;
+      padding: 24px 10px 0;
+    }
+
+    .error-message {
+      background: #fff4f4;
+      color: #8a3b3b;
+      border: 1px solid #efd0d0;
+      padding: 10px 12px;
+      border-radius: 10px;
+      margin-top: 10px;
+      display: none;
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 650px) {
+      .container {
+        width: min(100% - 20px, 920px);
+        padding-top: 10px;
+      }
+
+      .hero-banner {
+        height: 180px;
+      }
+
+      .logo {
+        width: 82px;
+        height: 82px;
+        margin-top: -45px;
+      }
+
+      .hero-content {
+        padding: 15px 16px 20px;
+      }
+
+      .player-card {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .cover {
+        margin: 0 auto;
+      }
+
+      .episode {
+        grid-template-columns: 36px 1fr auto;
+        gap: 8px;
+      }
+
+      .episode-status {
+        font-size: 0.75rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="container">
+
+    <!-- =========================
+         ENCABEZADO
+         ========================= -->
+    <section class="hero">
+
+      <!-- Banner de la semana actual.
+           Cambia automáticamente según SEMANA_ACTUAL -->
+      <img id="heroBanner" class="hero-banner" src="" alt="Banner de Fruto">
+
+      <!-- Tu logo -->
+      <div class="hero-content">
+        <img class="logo" src="logo.png" alt="Logo de Fruto">
+
+        <h1>FRUTO</h1>
+        <p class="subtitle">
+          Audiolibro · Un viaje de historias que florecen semana a semana.
+        </p>
+
+        <div class="week-badge">
+          Semana actual: <span id="currentWeek"></span> de 15
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =========================
+         REPRODUCTOR
+         ========================= -->
+    <section class="player-card">
+
+      <img id="episodeCover" class="cover" src="" alt="Portada del episodio">
+
+      <div>
+        <div class="episode-label">
+          Semana <span id="playerWeek"></span>
+        </div>
+
+        <h2 id="episodeTitle">Cargando episodio...</h2>
+
+        <audio id="audioPlayer" controls preload="metadata">
+          Tu navegador no puede reproducir este audio.
+        </audio>
+
+        <p class="player-note">
+          Este episodio está disponible para su reproducción.
+        </p>
+
+        <div id="audioError" class="error-message">
+          No se encontró el archivo de audio. Revisa que el nombre y la ubicación
+          coincidan con la estructura indicada.
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         LISTA DE 15 SEMANAS
+         ========================= -->
+    <section class="episodes-card">
+      <h2>Episodios</h2>
+      <div id="episodeList"></div>
+    </section>
+
+
+    <footer class="footer">
+      FRUTO Audiolibro · Un proyecto de historias que florecen.
+    </footer>
+
+  </main>
+
+
+  <script>
+    /*
+    ==========================================================
+    CONFIGURACIÓN PRINCIPAL
+    ==========================================================
+
+    CADA SEMANA SOLO TIENES QUE CAMBIAR ESTE NÚMERO.
+
+    Ejemplo:
+      semana 1 → const SEMANA_ACTUAL = 1;
+      semana 2 → const SEMANA_ACTUAL = 2;
+      semana 3 → const SEMANA_ACTUAL = 3;
+
+    Al cambiarlo, automáticamente se habilitan todas las
+    semanas anteriores y la nueva semana.
+    ==========================================================
+    */
+
+    const SEMANA_ACTUAL = 1;
+
+
+    /*
+    ==========================================================
+    INFORMACIÓN DE LOS 15 EPISODIOS
+    ==========================================================
+    Puedes cambiar los títulos cuando los tengas.
+    */
+
+    const episodios = [
+      { semana: 1, titulo: "Título del episodio 1" },
+      { semana: 2, titulo: "Título del episodio 2" },
+      { semana: 3, titulo: "Título del episodio 3" },
+      { semana: 4, titulo: "Título del episodio 4" },
+      { semana: 5, titulo: "Título del episodio 5" },
+      { semana: 6, titulo: "Título del episodio 6" },
+      { semana: 7, titulo: "Título del episodio 7" },
+      { semana: 8, titulo: "Título del episodio 8" },
+      { semana: 9, titulo: "Título del episodio 9" },
+      { semana: 10, titulo: "Título del episodio 10" },
+      { semana: 11, titulo: "Título del episodio 11" },
+      { semana: 12, titulo: "Título del episodio 12" },
+      { semana: 13, titulo: "Título del episodio 13" },
+      { semana: 14, titulo: "Título del episodio 14" },
+      { semana: 15, titulo: "Título del episodio 15" }
+    ];
+
+
+    /*
+    ==========================================================
+    GENERACIÓN DE RUTAS
+    ==========================================================
+    */
+
+    function numeroSemana(numero) {
+      return String(numero).padStart(2, "0");
+    }
+
+    function rutaAudio(numero) {
+      return `audios/semana-${numeroSemana(numero)}.mp3`;
+    }
+
+    function rutaBanner(numero) {
+      return `banners/banner-semana-${numeroSemana(numero)}.jpg`;
+    }
+
+    function rutaPortada(numero) {
+      return `portadas/portada-semana-${numeroSemana(numero)}.jpg`;
+    }
+
+
+    /*
+    ==========================================================
+    CARGAR EPISODIO ACTUAL
+    ==========================================================
+    */
+
+    const episodioActual = episodios[SEMANA_ACTUAL - 1];
+
+    document.getElementById("currentWeek").textContent = SEMANA_ACTUAL;
+    document.getElementById("playerWeek").textContent = SEMANA_ACTUAL;
+
+    document.getElementById("episodeTitle").textContent =
+      episodioActual.titulo;
+
+    document.getElementById("heroBanner").src =
+      rutaBanner(SEMANA_ACTUAL);
+
+    document.getElementById("episodeCover").src =
+      rutaPortada(SEMANA_ACTUAL);
+
+    document.getElementById("audioPlayer").src =
+      rutaAudio(SEMANA_ACTUAL);
+
+
+    /*
+    ==========================================================
+    LISTA DE EPISODIOS
+    ==========================================================
+    */
+
+    const lista = document.getElementById("episodeList");
+
+    episodios.forEach((episodio) => {
+
+      const disponible = episodio.semana <= SEMANA_ACTUAL;
+      const actual = episodio.semana === SEMANA_ACTUAL;
+
+      const elemento = document.createElement("div");
+
+      elemento.className =
+        "episode" +
+        (disponible ? " unlocked" : "") +
+        (actual ? " current" : "");
+
+      let icono;
+      let estado;
+
+      if (actual) {
+        icono = "▶";
+        estado = "Disponible ahora";
+      } else if (disponible) {
+        icono = "✓";
+        estado = "Disponible";
+      } else {
+        icono = "🔒";
+        estado = "Disponible próximamente";
+      }
+
+      elemento.innerHTML = `
+        <div class="status-icon">${icono}</div>
+
+        <div>
+          <div class="episode-title">
+            Semana ${episodio.semana} · ${episodio.titulo}
+          </div>
+          <div class="episode-status">${estado}</div>
+        </div>
+
+        <div class="episode-number">
+          ${episodio.semana}
+        </div>
+      `;
+
+      lista.appendChild(elemento);
+    });
+
+
+    /*
+    ==========================================================
+    AVISO SI NO SE ENCUENTRA EL AUDIO
+    ==========================================================
+    */
+
+    const audioPlayer = document.getElementById("audioPlayer");
+    const audioError = document.getElementById("audioError");
+
+    audioPlayer.addEventListener("error", () => {
+      audioError.style.display = "block";
+    });
+
+  </script>
+
+</body>
+</html>
