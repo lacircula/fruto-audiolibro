@@ -1,763 +1,136 @@
 <!DOCTYPE html>
 <html lang="es">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#7d6b91">
-  <meta name="description" content="Fruto — Audiolibro de La Círcula">
-
-  <title>FRUTO · Audiolibro</title>
-
-  <!-- FAVICON -->
-  <link rel="icon" type="image/x-icon" href="logo.ico">
-
-  <style>
-    :root {
-      --morado: #806d96;
-      --morado-oscuro: #554765;
-      --morado-profundo: #40334d;
-      --morado-palido: #c9bfd2;
-      --naranja: #e83d22;
-      --naranja-oscuro: #c92e19;
-      --crema: #f5f0e9;
-      --papel: #faf8f3;
-      --texto: #352d37;
-      --gris: #756d76;
-      --blanco: #fffdf9;
-      --borde: rgba(64, 51, 77, .16);
-      --sombra: 0 12px 30px rgba(64, 51, 77, .14);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      color: var(--texto);
-      background:
-        radial-gradient(circle at 10% 5%, rgba(232,61,34,.08) 0 90px, transparent 91px),
-        radial-gradient(circle at 93% 35%, rgba(128,109,150,.12) 0 120px, transparent 121px),
-        var(--crema);
-      font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
-      line-height: 1.5;
-    }
-
-    /* Textura sutil para conservar el aire editorial/artesanal */
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: .20;
-      background-image:
-        radial-gradient(rgba(64,51,77,.16) .5px, transparent .5px);
-      background-size: 7px 7px;
-      mix-blend-mode: multiply;
-    }
-
-    .container {
-      width: min(1000px, calc(100% - 28px));
-      margin: 0 auto;
-      padding: 22px 0 45px;
-      position: relative;
-    }
-
-    /* =========================
-       HERO / BANNER
-       ========================= */
-
-    .hero {
-      position: relative;
-      overflow: hidden;
-      background: var(--morado);
-      border-radius: 7px 7px 70px 7px;
-      box-shadow: var(--sombra);
-      margin-bottom: 24px;
-      border: 1px solid rgba(64,51,77,.12);
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      width: 230px;
-      height: 230px;
-      right: -80px;
-      bottom: -105px;
-      background: var(--naranja);
-      border-radius: 65% 35% 70% 30%;
-      transform: rotate(-16deg);
-      opacity: .95;
-      pointer-events: none;
-    }
-
-    .hero-banner {
-      width: 100%;
-      height: 330px;
-      object-fit: cover;
-      display: block;
-      background: var(--morado);
-    }
-
-    .hero-content {
-      position: relative;
-      padding: 24px 24px 30px;
-      text-align: center;
-      color: var(--blanco);
-      z-index: 2;
-    }
-
-    .hero-logo {
-      width: 112px;
-      height: 112px;
-      object-fit: contain;
-      display: block;
-      margin: -72px auto 7px;
-      position: relative;
-      z-index: 3;
-      filter: drop-shadow(0 5px 8px rgba(0,0,0,.16));
-    }
-
-    .fruto-title {
-      margin: 0;
-      color: var(--blanco);
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(2.6rem, 7vw, 5rem);
-      font-weight: 900;
-      letter-spacing: .14em;
-      line-height: .95;
-      text-shadow: 2px 2px 0 rgba(64,51,77,.20);
-    }
-
-    .fruto-title span {
-      color: var(--naranja);
-    }
-
-    .subtitle {
-      margin: 10px auto 16px;
-      max-width: 650px;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 1.05rem;
-      font-style: italic;
-      color: #f4edf8;
-    }
-
-    .week-badge {
-      display: inline-block;
-      padding: 8px 17px;
-      background: var(--naranja);
-      color: white;
-      border-radius: 4px 18px 4px 18px;
-      font-size: .86rem;
-      font-weight: 800;
-      letter-spacing: .04em;
-      transform: rotate(-1deg);
-    }
-
-    /* =========================
-       SEPARADOR
-       ========================= */
-
-    .section-kicker {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin: 0 0 12px;
-      color: var(--morado-oscuro);
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 1.65rem;
-      font-weight: 700;
-    }
-
-    .section-kicker::after {
-      content: "";
-      height: 2px;
-      flex: 1;
-      background: var(--naranja);
-      transform: rotate(-1deg);
-    }
-
-    /* =========================
-       REPRODUCTOR
-       ========================= */
-
-    .player-card {
-      position: relative;
-      overflow: hidden;
-      display: grid;
-      grid-template-columns: 260px 1fr;
-      gap: 28px;
-      align-items: center;
-      background: var(--morado);
-      color: white;
-      padding: 24px;
-      margin-bottom: 28px;
-      border-radius: 12px 55px 12px 35px;
-      box-shadow: var(--sombra);
-    }
-
-    .player-card::before,
-    .player-card::after {
-      content: "";
-      position: absolute;
-      pointer-events: none;
-      border-radius: 60% 40% 55% 45%;
-      background: var(--naranja);
-      opacity: .95;
-    }
-
-    .player-card::before {
-      width: 115px;
-      height: 115px;
-      right: -25px;
-      top: -55px;
-      transform: rotate(28deg);
-    }
-
-    .player-card::after {
-      width: 80px;
-      height: 180px;
-      left: -48px;
-      bottom: -90px;
-      transform: rotate(-25deg);
-    }
-
-    .cover-wrap {
-      position: relative;
-      z-index: 2;
-    }
-
-    .cover {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      object-fit: cover;
-      display: block;
-      border: 7px solid var(--crema);
-      box-shadow: 10px 12px 0 rgba(232,61,34,.95);
-      border-radius: 4px 22px 4px 22px;
-      background: var(--morado-palido);
-    }
-
-    .player-info {
-      position: relative;
-      z-index: 2;
-    }
-
-    .episode-label {
-      color: #f8d9d2;
-      font-size: .82rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: .12em;
-      margin-bottom: 5px;
-    }
-
-    .player-card h2 {
-      margin: 0 0 14px;
-      color: var(--blanco);
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(1.8rem, 4vw, 2.6rem);
-      line-height: 1.08;
-    }
-
-    .player-intro {
-      color: #eee7f2;
-      font-size: .95rem;
-      margin: 0 0 18px;
-      max-width: 560px;
-    }
-
-    audio {
-      width: 100%;
-      height: 42px;
-      accent-color: var(--naranja);
-    }
-
-    .player-note {
-      color: #e6dfea;
-      font-size: .78rem;
-      margin: 10px 0 0;
-    }
-
-    .error-message {
-      background: #fff1ee;
-      color: #8b2f21;
-      border: 1px solid #eab7ae;
-      padding: 10px 12px;
-      border-radius: 7px;
-      margin-top: 10px;
-      display: none;
-      font-size: .82rem;
-    }
-
-    /* =========================
-       LISTA DE EPISODIOS
-       ========================= */
-
-    .episodes-section {
-      background: rgba(255,253,249,.78);
-      border: 1px solid var(--borde);
-      padding: 22px;
-      border-radius: 7px 35px 7px 25px;
-      box-shadow: 0 7px 22px rgba(64,51,77,.07);
-    }
-
-    .episodes-subtitle {
-      margin: -4px 0 14px;
-      color: var(--gris);
-      font-size: .9rem;
-    }
-
-    .episode {
-      display: grid;
-      grid-template-columns: 52px 1fr auto;
-      gap: 13px;
-      align-items: center;
-      padding: 13px 10px;
-      border-top: 1px solid rgba(64,51,77,.13);
-      transition: transform .18s ease, background .18s ease;
-    }
-
-    .episode:hover {
-      transform: translateX(3px);
-      background: rgba(128,109,150,.07);
-    }
-
-    .episode:first-of-type {
-      border-top: 0;
-    }
-
-    .episode-number {
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      background: var(--morado-palido);
-      color: var(--morado-oscuro);
-      font-family: Georgia, "Times New Roman", serif;
-      font-weight: 700;
-      position: relative;
-    }
-
-    .episode.unlocked .episode-number {
-      background: var(--naranja);
-      color: white;
-    }
-
-    .episode.current {
-      background: var(--morado);
-      color: white;
-      border-radius: 6px 22px 6px 18px;
-      border-top-color: transparent;
-      margin: 3px 0;
-    }
-
-    .episode.current .episode-status {
-      color: #eadff0;
-    }
-
-    .episode-title {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 1.02rem;
-      font-weight: 700;
-    }
-
-    .episode-status {
-      color: var(--gris);
-      font-size: .78rem;
-      margin-top: 2px;
-    }
-
-    .status-icon {
-      min-width: 30px;
-      text-align: center;
-      font-size: 1rem;
-    }
-
-    .footer {
-      text-align: center;
-      color: var(--gris);
-      font-family: Georgia, "Times New Roman", serif;
-      font-style: italic;
-      font-size: .86rem;
-      padding: 25px 10px 0;
-    }
-
-    .footer strong {
-      color: var(--naranja);
-    }
-
-    /* =========================
-       RESPONSIVE
-       ========================= */
-
-    @media (max-width: 700px) {
-      .container {
-        width: min(100% - 16px, 1000px);
-        padding-top: 9px;
-      }
-
-      .hero {
-        border-radius: 5px 5px 45px 5px;
-      }
-
-      .hero-banner {
-        height: 220px;
-      }
-
-      .hero-logo {
-        width: 90px;
-        height: 90px;
-        margin-top: -55px;
-      }
-
-      .hero-content {
-        padding: 18px 15px 25px;
-      }
-
-      .fruto-title {
-        font-size: 3rem;
-      }
-
-      .subtitle {
-        font-size: .94rem;
-      }
-
-      .player-card {
-        grid-template-columns: 1fr;
-        gap: 23px;
-        padding: 18px;
-        border-radius: 8px 35px 8px 25px;
-      }
-
-      .cover {
-        width: min(72vw, 260px);
-        margin: 0 auto;
-      }
-
-      .player-info {
-        text-align: center;
-      }
-
-      .player-intro {
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .episodes-section {
-        padding: 15px;
-        border-radius: 6px 25px 6px 18px;
-      }
-
-      .episode {
-        grid-template-columns: 40px 1fr 25px;
-        gap: 8px;
-        padding: 12px 5px;
-      }
-
-      .episode-number {
-        width: 34px;
-        height: 34px;
-      }
-
-      .episode-title {
-        font-size: .92rem;
-      }
-
-      .episode-status {
-        font-size: .72rem;
-      }
-
-      .section-kicker {
-        font-size: 1.4rem;
-      }
-    }
-  </style>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#806d96">
+<title>FRUTO · Audiolibro</title>
+<link rel="icon" type="image/x-icon" href="./favicon.ico">
+
+<style>
+:root{--m:#806d96;--md:#554765;--n:#e83d22;--c:#f5f0e9;--p:#faf8f3;--t:#352d37;--g:#756d76}
+*{box-sizing:border-box}body{margin:0;background:var(--c);color:var(--t);font-family:"Trebuchet MS","Segoe UI",Arial,sans-serif}
+.container{width:min(1000px,calc(100% - 28px));margin:auto;padding:22px 0 45px}
+.hero{overflow:hidden;background:var(--m);border-radius:7px 7px 70px 7px;margin-bottom:24px;box-shadow:0 12px 30px #40334d22}
+.hero-banner{width:100%;height:330px;object-fit:cover;display:block;background:var(--m)}
+.hero-content{text-align:center;color:white;padding:24px;position:relative}
+.hero-logo{width:112px;height:112px;object-fit:contain;display:block;margin:-72px auto 7px;position:relative}
+.fruto-title{margin:0;font:900 clamp(2.6rem,7vw,5rem)/.95 Georgia,serif;letter-spacing:.14em}
+.fruto-title span{color:var(--n)}
+.subtitle{font:italic 1.05rem Georgia,serif;margin:10px auto 16px}
+.week-badge{display:inline-block;padding:8px 17px;background:var(--n);border-radius:4px 18px 4px 18px;font-size:.86rem;font-weight:bold}
+.section-kicker{display:flex;align-items:center;gap:12px;margin:0 0 12px;color:var(--md);font:700 1.65rem Georgia,serif}
+.section-kicker:after{content:"";height:2px;flex:1;background:var(--n)}
+.player-card{display:grid;grid-template-columns:260px 1fr;gap:28px;align-items:center;background:var(--m);color:white;padding:24px;margin-bottom:28px;border-radius:12px 55px 12px 35px;box-shadow:0 12px 30px #40334d22}
+.cover{width:100%;aspect-ratio:1;object-fit:cover;border:7px solid var(--c);box-shadow:10px 12px 0 var(--n);border-radius:4px 22px 4px 22px;background:#c9bfd2}
+.player-info{position:relative;z-index:2}.episode-label{color:#f8d9d2;font-size:.82rem;font-weight:bold;text-transform:uppercase;letter-spacing:.12em}
+.player-card h2{margin:5px 0 14px;color:white;font:clamp(1.8rem,4vw,2.6rem)/1.08 Georgia,serif}
+.player-intro{color:#eee7f2;margin:0 0 18px}audio{width:100%;height:42px}
+.player-note{color:#e6dfea;font-size:.78rem}
+.diagnostic{margin-top:12px;padding:9px 11px;background:#ffffff1a;border:1px solid #ffffff2e;border-radius:7px;color:#f1eaf4;font-size:.73rem;word-break:break-all}
+.error{display:none;background:#fff1ee;color:#8b2f21;border:1px solid #eab7ae;padding:10px;border-radius:7px;margin-top:10px;font-size:.82rem}
+.episodes{background:#fffdf9d1;border:1px solid #40334d29;padding:22px;border-radius:7px 35px 7px 25px}
+.episodes-subtitle{color:var(--g);font-size:.9rem}.episode{display:grid;grid-template-columns:52px 1fr auto;gap:13px;align-items:center;padding:13px 10px;border-top:1px solid #40334d22}
+.episode:first-child{border-top:0}.episode-number{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#c9bfd2;color:var(--md);font-weight:bold}
+.episode.unlocked .episode-number{background:var(--n);color:white}.episode.current{background:var(--m);color:white;border-radius:6px 22px 6px 18px;margin:3px 0}.episode-title{font:700 1rem Georgia,serif}.episode-status{color:var(--g);font-size:.78rem}.current .episode-status{color:#eadff0}
+.footer{text-align:center;color:var(--g);font:italic .86rem Georgia,serif;padding:25px}.footer strong{color:var(--n)}
+@media(max-width:700px){.container{width:calc(100% - 16px);padding-top:9px}.hero-banner{height:220px}.hero-logo{width:90px;height:90px;margin-top:-55px}.fruto-title{font-size:3rem}.player-card{grid-template-columns:1fr;gap:23px;padding:18px}.cover{width:min(72vw,260px);margin:auto}.player-info{text-align:center}.episodes{padding:15px}.episode{grid-template-columns:40px 1fr 25px;gap:8px}.episode-number{width:34px;height:34px}}
+</style>
 </head>
 
 <body>
-
-  <main class="container">
-
-    <!-- =========================
-         ENCABEZADO
-         ========================= -->
-    <section class="hero">
-
-      <!--
-        BANNER:
-        banners/banner-semana-01.jpg
-        banners/banner-semana-02.jpg
-        ...
-        banners/banner-semana-15.jpg
-      -->
-      <img id="heroBanner"
-           class="hero-banner"
-           src=""
-           alt="Banner de Fruto">
-
-      <div class="hero-content">
-
-        <!-- Tu logo de FRUTO -->
-        <img class="hero-logo"
-             src="logo.png"
-             alt="Logo de Fruto">
-
-        <h1 class="fruto-title">FRU<span>T</span>O</h1>
-
-        <p class="subtitle">
-          Audiolibro de La Círcula · una historia que florece semana a semana.
-        </p>
-
-        <div class="week-badge">
-          SEMANA <span id="currentWeek"></span> · 15
-        </div>
-
-      </div>
-    </section>
-
-
-    <!-- =========================
-         REPRODUCTOR
-         ========================= -->
-    <div class="section-kicker">
-      Escuchar
-    </div>
-
-    <section class="player-card">
-
-      <div class="cover-wrap">
-        <!--
-          PORTADA:
-          portadas/portada-semana-01.jpg
-          portadas/portada-semana-02.jpg
-          ...
-          portadas/portada-semana-15.jpg
-        -->
-        <img id="episodeCover"
-             class="cover"
-             src=""
-             alt="Portada del episodio">
-      </div>
-
-      <div class="player-info">
-
-        <div class="episode-label">
-          Capítulo · Semana <span id="playerWeek"></span>
-        </div>
-
-        <h2 id="episodeTitle">
-          Cargando episodio...
-        </h2>
-
-        <p class="player-intro">
-          Ponte cómoda, dale play y deja que la historia encuentre su propio ritmo.
-        </p>
-
-        <audio id="audioPlayer" controls preload="metadata">
-          Tu navegador no puede reproducir este audio.
-        </audio>
-
-        <p class="player-note">
-          ✦ Episodio disponible para la semana actual.
-        </p>
-
-        <div id="audioError" class="error-message">
-          No se encontró el archivo de audio. Revisa que el nombre y la ubicación
-          coincidan con la estructura indicada.
-        </div>
-
-      </div>
-    </section>
-
-
-    <!-- =========================
-         LISTA
-         ========================= -->
-    <section class="episodes-section">
-
-      <div class="section-kicker">
-        El recorrido
-      </div>
-
-      <p class="episodes-subtitle">
-        Cada semana se abre un nuevo fragmento de <em>Fruto</em>.
-      </p>
-
-      <div id="episodeList"></div>
-
-    </section>
-
-
-    <footer class="footer">
-      <strong>FRUTO</strong> · Audiolibro de La Círcula
-    </footer>
-
-  </main>
-
-
-  <script>
-
-    /*
-    ==========================================================
-    CONFIGURACIÓN PRINCIPAL
-
-    Solo cambia este número cada semana:
-
-      semana 1  → 1
-      semana 2  → 2
-      ...
-      semana 15 → 15
-    ==========================================================
-    */
-
-    const SEMANA_ACTUAL = 1;
-
-
-    /*
-    ==========================================================
-    INFORMACIÓN DE LOS EPISODIOS
-    ==========================================================
-    */
-
-    const episodios = [
-      { semana: 1,  titulo: "Semana 1" },
-      { semana: 2,  titulo: "Semana 2" },
-      { semana: 3,  titulo: "Semana 3" },
-      { semana: 4,  titulo: "Semana 4" },
-      { semana: 5,  titulo: "Semana 5" },
-      { semana: 6,  titulo: "Semana 6" },
-      { semana: 7,  titulo: "Semana 7" },
-      { semana: 8,  titulo: "Semana 8" },
-      { semana: 9,  titulo: "Semana 9" },
-      { semana: 10, titulo: "Semana 10" },
-      { semana: 11, titulo: "Semana 11" },
-      { semana: 12, titulo: "Semana 12" },
-      { semana: 13, titulo: "Semana 13" },
-      { semana: 14, titulo: "Semana 14" },
-      { semana: 15, titulo: "Semana 15" }
-    ];
-
-
-    /*
-    ==========================================================
-    RUTAS DE ARCHIVOS
-    ==========================================================
-    */
-
-    function numeroSemana(numero) {
-      return String(numero).padStart(2, "0");
-    }
-
-    function rutaAudio(numero) {
-      return `audios/semana-${numeroSemana(numero)}.mp3`;
-    }
-
-    function rutaBanner(numero) {
-      return `banners/banner-semana-${numeroSemana(numero)}.jpg`;
-    }
-
-    function rutaPortada(numero) {
-      return `portadas/portada-semana-${numeroSemana(numero)}.jpg`;
-    }
-
-
-    /*
-    ==========================================================
-    CARGAR SEMANA ACTUAL
-    ==========================================================
-    */
-
-    const episodioActual = episodios[SEMANA_ACTUAL - 1];
-
-    document.getElementById("currentWeek").textContent = SEMANA_ACTUAL;
-    document.getElementById("playerWeek").textContent = SEMANA_ACTUAL;
-
-    document.getElementById("episodeTitle").textContent =
-      episodioActual.titulo;
-
-    document.getElementById("heroBanner").src =
-      rutaBanner(SEMANA_ACTUAL);
-
-    document.getElementById("episodeCover").src =
-      rutaPortada(SEMANA_ACTUAL);
-
-    document.getElementById("audioPlayer").src =
-      rutaAudio(SEMANA_ACTUAL);
-
-
-    /*
-    ==========================================================
-    LISTA DE LAS 15 SEMANAS
-    ==========================================================
-    */
-
-    const lista = document.getElementById("episodeList");
-
-    episodios.forEach((episodio) => {
-
-      const disponible = episodio.semana <= SEMANA_ACTUAL;
-      const actual = episodio.semana === SEMANA_ACTUAL;
-
-      const elemento = document.createElement("div");
-
-      elemento.className =
-        "episode" +
-        (disponible ? " unlocked" : "") +
-        (actual ? " current" : "");
-
-      let icono;
-      let estado;
-
-      if (actual) {
-        icono = "▶";
-        estado = "Disponible esta semana";
-      } else if (disponible) {
-        icono = "✓";
-        estado = "Disponible";
-      } else {
-        icono = "✦";
-        estado = "Próximamente";
-      }
-
-      elemento.innerHTML = `
-        <div class="status-icon">${icono}</div>
-
-        <div>
-          <div class="episode-title">
-            Semana ${episodio.semana} · ${episodio.titulo}
-          </div>
-          <div class="episode-status">${estado}</div>
-        </div>
-
-        <div class="episode-number">
-          ${episodio.semana}
-        </div>
-      `;
-
-      lista.appendChild(elemento);
-    });
-
-
-    /*
-    ==========================================================
-    ERROR DE AUDIO
-    ==========================================================
-    */
-
-    const audioPlayer = document.getElementById("audioPlayer");
-    const audioError = document.getElementById("audioError");
-
-    audioPlayer.addEventListener("error", () => {
-      audioError.style.display = "block";
-    });
-
-  </script>
-
+<main class="container">
+
+<section class="hero">
+<img id="heroBanner" class="hero-banner" src="./banners/banner-semana-01.jpg" alt="Banner de Fruto">
+<div class="hero-content">
+<img class="hero-logo" src="./logo.png" alt="Logo de Fruto">
+<h1 class="fruto-title">FRU<span>T</span>O</h1>
+<p class="subtitle">Audiolibro de La Círcula · una historia que florece semana a semana.</p>
+<div class="week-badge">SEMANA <span id="currentWeek">1</span> · 15</div>
+</div>
+</section>
+
+<div class="section-kicker">Escuchar</div>
+
+<section class="player-card">
+<div><img id="episodeCover" class="cover" src="./portadas/portada-semana-01.jpg" alt="Portada del episodio"></div>
+<div class="player-info">
+<div class="episode-label">Capítulo · Semana <span id="playerWeek">1</span></div>
+<h2 id="episodeTitle">Título del episodio 1</h2>
+<p class="player-intro">Ponte cómoda, dale play y deja que la historia encuentre su propio ritmo.</p>
+<audio id="audioPlayer" controls preload="metadata"></audio>
+<p class="player-note">✦ Episodio disponible esta semana.</p>
+<div id="audioError" class="error"></div>
+<div class="diagnostic"><strong>Archivo:</strong> <span id="audioPath"></span></div>
+</div>
+</section>
+
+<section class="episodes">
+<div class="section-kicker">El recorrido</div>
+<p class="episodes-subtitle">Cada semana se abre un nuevo fragmento de <em>Fruto</em>.</p>
+<div id="episodeList"></div>
+</section>
+
+<footer class="footer"><strong>FRUTO</strong> · Audiolibro de La Círcula</footer>
+</main>
+
+<script>
+/* SOLO CAMBIA ESTE NÚMERO CADA SEMANA */
+const SEMANA_ACTUAL = 1;
+
+const episodios = [
+{semana:1,titulo:"Título del episodio 1"},{semana:2,titulo:"Título del episodio 2"},
+{semana:3,titulo:"Título del episodio 3"},{semana:4,titulo:"Título del episodio 4"},
+{semana:5,titulo:"Título del episodio 5"},{semana:6,titulo:"Título del episodio 6"},
+{semana:7,titulo:"Título del episodio 7"},{semana:8,titulo:"Título del episodio 8"},
+{semana:9,titulo:"Título del episodio 9"},{semana:10,titulo:"Título del episodio 10"},
+{semana:11,titulo:"Título del episodio 11"},{semana:12,titulo:"Título del episodio 12"},
+{semana:13,titulo:"Título del episodio 13"},{semana:14,titulo:"Título del episodio 14"},
+{semana:15,titulo:"Título del episodio 15"}
+];
+
+function n(n){return String(n).padStart(2,"0")}
+function audio(n){return `./audios/semana-${n(n)}.mp3`}
+function banner(n){return `./banners/banner-semana-${n(n)}.jpg`}
+function portada(n){return `./portadas/portada-semana-${n(n)}.jpg`}
+
+const actual=episodios[SEMANA_ACTUAL-1];
+const player=document.getElementById("audioPlayer");
+const audioURL=audio(SEMANA_ACTUAL);
+
+document.getElementById("currentWeek").textContent=SEMANA_ACTUAL;
+document.getElementById("playerWeek").textContent=SEMANA_ACTUAL;
+document.getElementById("episodeTitle").textContent=actual.titulo;
+document.getElementById("heroBanner").src=banner(SEMANA_ACTUAL);
+document.getElementById("episodeCover").src=portada(SEMANA_ACTUAL);
+document.getElementById("audioPath").textContent=audioURL;
+player.src=audioURL;
+player.load();
+
+const list=document.getElementById("episodeList");
+
+episodios.forEach(e=>{
+  const available=e.semana<=SEMANA_ACTUAL;
+  const current=e.semana===SEMANA_ACTUAL;
+  const el=document.createElement("div");
+  el.className="episode"+(available?" unlocked":"")+(current?" current":"");
+  const icon=current?"▶":available?"✓":"✦";
+  const status=current?"Disponible esta semana":available?"Disponible":"Próximamente";
+  el.innerHTML=`<div>${icon}</div><div><div class="episode-title">Semana ${e.semana} · ${e.titulo}</div><div class="episode-status">${status}</div></div><div class="episode-number">${e.semana}</div>`;
+  list.appendChild(el);
+});
+
+player.addEventListener("error",()=>{
+  const url=new URL(audioURL,document.baseURI).href;
+  const box=document.getElementById("audioError");
+  box.style.display="block";
+  box.textContent="No se pudo cargar el audio. URL intentada: "+url;
+});
+
+player.addEventListener("loadedmetadata",()=>{
+  document.getElementById("audioError").style.display="none";
+});
+</script>
 </body>
 </html>
