@@ -35,34 +35,25 @@
 .episode.unlocked .episode-number{background:var(--n);color:white}.episode.current{background:var(--m);color:white;border-radius:6px 22px 6px 18px;margin:3px 0}.episode-title{font:700 1rem Georgia,serif}.episode-status{color:var(--g);font-size:.78rem}.current .episode-status{color:#eadff0}
 .footer{text-align:center;color:var(--g);font:italic .86rem Georgia,serif;padding:25px}.footer strong{color:var(--n)}
 @media(max-width:700px){.container{width:calc(100% - 16px);padding-top:9px}.hero-banner{height:220px}.hero-logo{width:90px;height:90px;margin-top:-55px}.fruto-title{font-size:3rem}.player-card{grid-template-columns:1fr;gap:23px;padding:18px}.cover{width:min(72vw,260px);margin:auto}.player-info{text-align:center}.episodes{padding:15px}.episode{grid-template-columns:40px 1fr 25px;gap:8px}.episode-number{width:34px;height:34px}}
+
 .copyright-notice {
   background: rgba(255, 253, 249, .88);
   border: 1px solid rgba(85, 71, 101, .18);
   border-left: 4px solid #e83d22;
   color: #554765;
   padding: 11px 15px;
-  margin: 0 0 18px;
+  margin: 14px 0 22px;
   border-radius: 5px 14px 5px 14px;
   font-size: .78rem;
   line-height: 1.5;
 }
+.copyright-notice strong { color: #e83d22; }
 
-.copyright-notice strong {
-  color: #e83d22;
-}
 </style>
 </head>
 
 <body>
 <main class="container">
-<div class="copyright-notice">
-  <strong>Sobre este audiolibro:</strong>
-  <em>Fruto</em>, de <strong>Daniela Rea Gómez</strong>, es una obra protegida por derechos de autor.
-  Estos audios fueron realizados para acompañar las actividades de lectura de <strong>La Círcula</strong>
-  y se comparten exclusivamente con sus integrantes, sin fines de lucro y para uso personal.
-  Se solicita no descargar, reproducir ni compartir las grabaciones fuera de este espacio.
-  Todos los derechos de la obra corresponden a su autora y/o a sus respectivos titulares.
-</div>
 
 <section class="hero">
 <img id="heroBanner" class="hero-banner" src="./banners/banner-semana-01.jpg" alt="Banner de Fruto">
@@ -74,6 +65,16 @@
 </div>
 </section>
 
+
+<div class="copyright-notice">
+  <strong>Sobre este audiolibro:</strong>
+  <em>Fruto</em>, de <strong>Daniela R. Gómez</strong>, es una obra protegida por derechos de autor.
+  Estos audios fueron realizados para acompañar las actividades de lectura de <strong>La Círcula</strong>
+  y se comparten exclusivamente con sus integrantes, sin fines de lucro y para uso personal.
+  Se solicita no descargar, reproducir ni compartir las grabaciones fuera de este espacio.
+  Todos los derechos de la obra corresponden a su autora y/o a sus respectivos titulares.
+</div>
+
 <div class="section-kicker">Escuchar</div>
 
 <section class="player-card">
@@ -82,7 +83,7 @@
 <div class="episode-label">Capítulo · Semana <span id="playerWeek">1</span></div>
 <h2 id="episodeTitle">Título del episodio 1</h2>
 <p class="player-intro">Ponte cómoda, dale play y deja que la historia encuentre su propio ritmo.</p>
-<audio id="audioPlayer" controls preload="metadata"></audio>
+<audio id="audioPlayer" controls controlsList="nodownload" preload="metadata"></audio>
 <p class="player-note">✦ Episodio disponible esta semana.</p>
 <div id="audioError" class="error"></div>
 <div class="diagnostic"><strong>Archivo:</strong> <span id="audioPath"></span></div>
@@ -103,7 +104,7 @@
 const SEMANA_ACTUAL = 1;
 
 const episodios = [
-{semana:1,titulo:"Sesión 1: 19 de agosto 2026"},{semana:2,titulo:"Título del episodio 2"},
+{semana:1,titulo:"Título del episodio 1"},{semana:2,titulo:"Título del episodio 2"},
 {semana:3,titulo:"Título del episodio 3"},{semana:4,titulo:"Título del episodio 4"},
 {semana:5,titulo:"Título del episodio 5"},{semana:6,titulo:"Título del episodio 6"},
 {semana:7,titulo:"Título del episodio 7"},{semana:8,titulo:"Título del episodio 8"},
