@@ -1,54 +1,340 @@
-<!DOCTYPE html>
+from pathlib import Path
+
+html = r'''<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#806d96">
+<meta name="description" content="Fruto — Audiolibro de La Círcula">
 <title>FRUTO · Audiolibro</title>
 <link rel="icon" type="image/x-icon" href="./favicon.ico">
 
 <style>
-:root{--m:#806d96;--md:#554765;--n:#e83d22;--c:#f5f0e9;--p:#faf8f3;--t:#352d37;--g:#756d76}
-*{box-sizing:border-box}body{margin:0;background:var(--c);color:var(--t);font-family:"Trebuchet MS","Segoe UI",Arial,sans-serif}
-.container{width:min(1000px,calc(100% - 28px));margin:auto;padding:22px 0 45px}
-.hero{overflow:hidden;background:var(--m);border-radius:7px 7px 70px 7px;margin-bottom:24px;box-shadow:0 12px 30px #40334d22}
-.hero-banner{width:100%;height:330px;object-fit:cover;display:block;background:var(--m)}
-.hero-content{text-align:center;color:white;padding:24px;position:relative}
-.hero-logo{width:112px;height:112px;object-fit:contain;display:block;margin:-72px auto 7px;position:relative}
-.fruto-title{margin:0;font:900 clamp(2.6rem,7vw,5rem)/.95 Georgia,serif;letter-spacing:.14em}
-.fruto-title span{color:var(--n)}
-.subtitle{font:italic 1.05rem Georgia,serif;margin:10px auto 16px}
-.week-badge{display:inline-block;padding:8px 17px;background:var(--n);border-radius:4px 18px 4px 18px;font-size:.86rem;font-weight:bold}
-.section-kicker{display:flex;align-items:center;gap:12px;margin:0 0 12px;color:var(--md);font:700 1.65rem Georgia,serif}
-.section-kicker:after{content:"";height:2px;flex:1;background:var(--n)}
-.player-card{display:grid;grid-template-columns:260px 1fr;gap:28px;align-items:center;background:var(--m);color:white;padding:24px;margin-bottom:28px;border-radius:12px 55px 12px 35px;box-shadow:0 12px 30px #40334d22}
-.cover{width:100%;aspect-ratio:1;object-fit:cover;border:7px solid var(--c);box-shadow:10px 12px 0 var(--n);border-radius:4px 22px 4px 22px;background:#c9bfd2}
-.player-info{position:relative;z-index:2}.episode-label{color:#f8d9d2;font-size:.82rem;font-weight:bold;text-transform:uppercase;letter-spacing:.12em}
-.player-card h2{margin:5px 0 14px;color:white;font:clamp(1.8rem,4vw,2.6rem)/1.08 Georgia,serif}
-.player-intro{color:#eee7f2;margin:0 0 18px}audio{width:100%;height:42px}
-.player-note{color:#e6dfea;font-size:.78rem}
-.diagnostic{margin-top:12px;padding:9px 11px;background:#ffffff1a;border:1px solid #ffffff2e;border-radius:7px;color:#f1eaf4;font-size:.73rem;word-break:break-all}
-.error{display:none;background:#fff1ee;color:#8b2f21;border:1px solid #eab7ae;padding:10px;border-radius:7px;margin-top:10px;font-size:.82rem}
-.episodes{background:#fffdf9d1;border:1px solid #40334d29;padding:22px;border-radius:7px 35px 7px 25px}
-.episodes-subtitle{color:var(--g);font-size:.9rem}.episode{display:grid;grid-template-columns:52px 1fr auto;gap:13px;align-items:center;padding:13px 10px;border-top:1px solid #40334d22}
-.episode:first-child{border-top:0}.episode-number{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#c9bfd2;color:var(--md);font-weight:bold}
-.episode.unlocked .episode-number{background:var(--n);color:white}.episode.current{background:var(--m);color:white;border-radius:6px 22px 6px 18px;margin:3px 0}.episode-title{font:700 1rem Georgia,serif}.episode-status{color:var(--g);font-size:.78rem}.current .episode-status{color:#eadff0}
-.footer{text-align:center;color:var(--g);font:italic .86rem Georgia,serif;padding:25px}.footer strong{color:var(--n)}
-@media(max-width:700px){.container{width:calc(100% - 16px);padding-top:9px}.hero-banner{height:220px}.hero-logo{width:90px;height:90px;margin-top:-55px}.fruto-title{font-size:3rem}.player-card{grid-template-columns:1fr;gap:23px;padding:18px}.cover{width:min(72vw,260px);margin:auto}.player-info{text-align:center}.episodes{padding:15px}.episode{grid-template-columns:40px 1fr 25px;gap:8px}.episode-number{width:34px;height:34px}}
-
-.copyright-notice {
-  background: rgba(255, 253, 249, .88);
-  border: 1px solid rgba(85, 71, 101, .18);
-  border-left: 4px solid #e83d22;
-  color: #554765;
-  padding: 11px 15px;
-  margin: 14px 0 22px;
-  border-radius: 5px 14px 5px 14px;
-  font-size: .78rem;
-  line-height: 1.5;
+:root{
+  --m:#806d96;
+  --md:#554765;
+  --n:#e83d22;
+  --c:#f5f0e9;
+  --p:#faf8f3;
+  --t:#352d37;
+  --g:#756d76;
 }
-.copyright-notice strong { color: #e83d22; }
+*{box-sizing:border-box}
 
+body{
+  margin:0;
+  background:var(--c);
+  color:var(--t);
+  font-family:"Trebuchet MS","Segoe UI",Arial,sans-serif;
+}
+
+.container{
+  width:min(1000px,calc(100% - 28px));
+  margin:auto;
+  padding:22px 0 45px;
+}
+
+.hero{
+  overflow:hidden;
+  background:var(--m);
+  border-radius:7px 7px 70px 7px;
+  margin-bottom:0;
+  box-shadow:0 12px 30px #40334d22;
+}
+
+.hero-banner{
+  width:100%;
+  height:330px;
+  object-fit:cover;
+  display:block;
+  background:var(--m);
+}
+
+.hero-content{
+  text-align:center;
+  color:white;
+  padding:24px;
+  position:relative;
+}
+
+.hero-logo{
+  width:112px;
+  height:112px;
+  object-fit:contain;
+  display:block;
+  margin:-72px auto 7px;
+  position:relative;
+}
+
+.fruto-title{
+  margin:0;
+  font:900 clamp(2.6rem,7vw,5rem)/.95 Georgia,serif;
+  letter-spacing:.14em;
+}
+
+.fruto-title span{color:var(--n)}
+
+.subtitle{
+  font:italic 1.05rem Georgia,serif;
+  margin:10px auto 16px;
+}
+
+.week-badge{
+  display:inline-block;
+  padding:8px 17px;
+  background:var(--n);
+  border-radius:4px 18px 4px 18px;
+  font-size:.86rem;
+  font-weight:bold;
+}
+
+.copyright-notice{
+  background:rgba(255,253,249,.9);
+  border:1px solid rgba(85,71,101,.18);
+  border-left:4px solid var(--n);
+  color:var(--md);
+  padding:11px 15px;
+  margin:14px 0 22px;
+  border-radius:5px 14px 5px 14px;
+  font-size:.78rem;
+  line-height:1.5;
+}
+
+.copyright-notice strong{color:var(--n)}
+
+.section-kicker{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin:0 0 12px;
+  color:var(--md);
+  font:700 1.65rem Georgia,serif;
+}
+
+.section-kicker:after{
+  content:"";
+  height:2px;
+  flex:1;
+  background:var(--n);
+}
+
+.player-card{
+  display:grid;
+  grid-template-columns:260px 1fr;
+  gap:28px;
+  align-items:center;
+  background:var(--m);
+  color:white;
+  padding:24px;
+  margin-bottom:28px;
+  border-radius:12px 55px 12px 35px;
+  box-shadow:0 12px 30px #40334d22;
+}
+
+.cover{
+  width:100%;
+  aspect-ratio:1;
+  object-fit:cover;
+  border:7px solid var(--c);
+  box-shadow:10px 12px 0 var(--n);
+  border-radius:4px 22px 4px 22px;
+  background:#c9bfd2;
+}
+
+.player-info{
+  position:relative;
+  z-index:2;
+}
+
+.episode-label{
+  color:#f8d9d2;
+  font-size:.82rem;
+  font-weight:bold;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+}
+
+.player-card h2{
+  margin:5px 0 14px;
+  color:white;
+  font:clamp(1.8rem,4vw,2.6rem)/1.08 Georgia,serif;
+}
+
+.player-intro{
+  color:#eee7f2;
+  margin:0 0 18px;
+}
+
+audio{
+  width:100%;
+  height:42px;
+}
+
+.player-note{
+  color:#e6dfea;
+  font-size:.78rem;
+}
+
+.diagnostic{
+  margin-top:12px;
+  padding:9px 11px;
+  background:#ffffff1a;
+  border:1px solid #ffffff2e;
+  border-radius:7px;
+  color:#f1eaf4;
+  font-size:.73rem;
+  word-break:break-all;
+}
+
+.error{
+  display:none;
+  background:#fff1ee;
+  color:#8b2f21;
+  border:1px solid #eab7ae;
+  padding:10px;
+  border-radius:7px;
+  margin-top:10px;
+  font-size:.82rem;
+}
+
+.episodes{
+  background:#fffdf9d1;
+  border:1px solid #40334d29;
+  padding:22px;
+  border-radius:7px 35px 7px 25px;
+}
+
+.episodes-subtitle{
+  color:var(--g);
+  font-size:.9rem;
+}
+
+.episode{
+  display:grid;
+  grid-template-columns:44px 1fr auto;
+  gap:13px;
+  align-items:center;
+  padding:13px 10px;
+  border-top:1px solid #40334d22;
+  transition:transform .15s ease,background .15s ease;
+}
+
+.episode:first-child{border-top:0}
+
+.episode.available{
+  cursor:pointer;
+}
+
+.episode.available:hover{
+  background:#806d9610;
+  transform:translateX(3px);
+}
+
+.episode-number{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#c9bfd2;
+  color:var(--md);
+  font-weight:bold;
+}
+
+.episode.available .episode-number{
+  background:var(--n);
+  color:white;
+}
+
+.episode.current{
+  background:var(--m);
+  color:white;
+  border-radius:6px 22px 6px 18px;
+  margin:3px 0;
+}
+
+.episode.current .episode-number{
+  background:var(--n);
+  color:white;
+}
+
+.episode-title{
+  font:700 1rem Georgia,serif;
+}
+
+.episode-status{
+  color:var(--g);
+  font-size:.78rem;
+}
+
+.episode.current .episode-status{
+  color:#eadff0;
+}
+
+.episode-action{
+  color:var(--n);
+  font-size:1rem;
+  font-weight:bold;
+  min-width:30px;
+  text-align:center;
+}
+
+.episode.current .episode-action{
+  color:white;
+}
+
+.footer{
+  text-align:center;
+  color:var(--g);
+  font:italic .86rem Georgia,serif;
+  padding:25px;
+}
+
+.footer strong{color:var(--n)}
+
+@media(max-width:700px){
+  .container{
+    width:calc(100% - 16px);
+    padding-top:9px;
+  }
+
+  .hero-banner{height:220px}
+
+  .hero-logo{
+    width:90px;
+    height:90px;
+    margin-top:-55px;
+  }
+
+  .fruto-title{font-size:3rem}
+
+  .player-card{
+    grid-template-columns:1fr;
+    gap:23px;
+    padding:18px;
+  }
+
+  .cover{
+    width:min(72vw,260px);
+    margin:auto;
+  }
+
+  .player-info{text-align:center}
+
+  .episodes{padding:15px}
+
+  .episode{
+    grid-template-columns:40px 1fr 30px;
+    gap:8px;
+  }
+
+  .episode-number{
+    width:34px;
+    height:34px;
+  }
+}
 </style>
 </head>
 
@@ -56,15 +342,31 @@
 <main class="container">
 
 <section class="hero">
-<img id="heroBanner" class="hero-banner" src="./banners/banner-semana-01.jpg" alt="Banner de Fruto">
-<div class="hero-content">
-<img class="hero-logo" src="./logo.png" alt="Logo de Fruto">
-<h1 class="fruto-title">FRU<span>T</span>O</h1>
-<p class="subtitle">Audiolibro de La Círcula · una historia que florece semana a semana.</p>
-<div class="week-badge">SEMANA <span id="currentWeek">1</span> · 15</div>
-</div>
-</section>
+  <img
+    id="heroBanner"
+    class="hero-banner"
+    src="./banners/banner-semana-02.jpg"
+    alt="Banner de Fruto"
+  >
 
+  <div class="hero-content">
+    <img
+      class="hero-logo"
+      src="./logo.png"
+      alt="Logo de La Círcula"
+    >
+
+    <h1 class="fruto-title">FRU<span>T</span>O</h1>
+
+    <p class="subtitle">
+      Audiolibro de La Círcula · una historia que florece semana a semana.
+    </p>
+
+    <div class="week-badge">
+      SEMANA <span id="currentWeek">2</span> · 15
+    </div>
+  </div>
+</section>
 
 <div class="copyright-notice">
   <strong>Sobre este audiolibro:</strong>
@@ -78,83 +380,340 @@
 <div class="section-kicker">Escuchar</div>
 
 <section class="player-card">
-<div><img id="episodeCover" class="cover" src="./portadas/portada-semana-01.jpg" alt="Portada del episodio"></div>
-<div class="player-info">
-<div class="episode-label">Capítulo · Semana <span id="playerWeek">1</span></div>
-<h2 id="episodeTitle">Título del episodio 1</h2>
-<p class="player-intro">Ponte cómoda, dale play y deja que la historia encuentre su propio ritmo.</p>
-<audio id="audioPlayer" controls controlsList="nodownload" preload="metadata"></audio>
-<p class="player-note">✦ Episodio disponible esta semana.</p>
-<div id="audioError" class="error"></div>
-<div class="diagnostic"><strong>Archivo:</strong> <span id="audioPath"></span></div>
-</div>
+
+  <div>
+    <img
+      id="episodeCover"
+      class="cover"
+      src="./portadas/portada-semana-02.jpg"
+      alt="Portada del episodio"
+    >
+  </div>
+
+  <div class="player-info">
+
+    <div class="episode-label">
+      Capítulo · Semana <span id="playerWeek">2</span>
+    </div>
+
+    <h2 id="episodeTitle">Semana 2</h2>
+
+    <p class="player-intro">
+      Ponte cómoda, dale play y deja que la historia encuentre su propio ritmo.
+    </p>
+
+    <audio
+      id="audioPlayer"
+      controls
+      controlsList="nodownload"
+      preload="metadata"
+    ></audio>
+
+    <p class="player-note">
+      ✦ Selecciona otro capítulo disponible en el recorrido para escucharlo.
+    </p>
+
+    <div id="audioError" class="error"></div>
+
+    <div class="diagnostic">
+      <strong>Archivo:</strong>
+      <span id="audioPath"></span>
+    </div>
+
+  </div>
 </section>
 
 <section class="episodes">
-<div class="section-kicker">El recorrido</div>
-<p class="episodes-subtitle">Cada semana se abre un nuevo fragmento de <em>Fruto</em>.</p>
-<div id="episodeList"></div>
+
+  <div class="section-kicker">El recorrido</div>
+
+  <p class="episodes-subtitle">
+    Cada semana se abre un nuevo fragmento de <em>Fruto</em>.
+    Los capítulos anteriores permanecen disponibles para volver a escucharlos.
+  </p>
+
+  <div id="episodeList"></div>
+
 </section>
 
-<footer class="footer"><strong>FRUTO</strong> · Audiolibro de La Círcula</footer>
+<footer class="footer">
+  <strong>FRUTO</strong> · Audiolibro de La Círcula
+</footer>
+
 </main>
 
 <script>
-/* SOLO CAMBIA ESTE NÚMERO CADA SEMANA */
+
+/*
+============================================================
+CONFIGURACIÓN SEMANAL
+============================================================
+
+SOLO CAMBIA ESTE NÚMERO CADA SEMANA.
+
+Semana 1 → 1
+Semana 2 → 2
+Semana 3 → 3
+...
+Semana 15 → 15
+*/
+
 const SEMANA_ACTUAL = 2;
 
+
+/*
+============================================================
+EPISODIOS
+============================================================
+*/
+
 const episodios = [
-{semana:1,titulo:"19 de agosto"},{semana:2,titulo:"26 de agosto"},
-{semana:3,titulo:"01 de septiembre"},{semana:4,titulo:"09 de septiembre"},
-{semana:5,titulo:"16 de septiembre"},{semana:6,titulo:"23 de septiembre"},
-{semana:7,titulo:"30 de septiembre"},{semana:8,titulo:"07 de octubre"},
-{semana:9,titulo:"14 de octubre"},{semana:10,titulo:"21 de octubre"},
-{semana:11,titulo:"28 de octubre"},{semana:12,titulo:"04 de noviembre"},
-{semana:13,titulo:"11 de noviembre"},{semana:14,titulo:"18 de noviembre"},
-{semana:15,titulo:"25 de noviembre"}
+  { semana: 1,  titulo: "Semana 1" },
+  { semana: 2,  titulo: "Semana 2" },
+  { semana: 3,  titulo: "Semana 3" },
+  { semana: 4,  titulo: "Semana 4" },
+  { semana: 5,  titulo: "Semana 5" },
+  { semana: 6,  titulo: "Semana 6" },
+  { semana: 7, titulo: "Semana 7" },
+  { semana: 8, titulo: "Semana 8" },
+  { semana: 9, titulo: "Semana 9" },
+  { semana: 10, titulo: "Semana 10" },
+  { semana: 11, titulo: "Semana 11" },
+  { semana: 12, titulo: "Semana 12" },
+  { semana: 13, titulo: "Semana 13" },
+  { semana: 14, titulo: "Semana 14" },
+  { semana: 15, titulo: "Semana 15" }
 ];
 
-function numeroSemana(numero){return String(numero).padStart(2,"0")}
-function audio(numero){return `./audios/semana-${numeroSemana(numero)}.mp3`}
-function banner(numero){return `./banners/banner-semana-${numeroSemana(numero)}.jpg`}
-function portada(numero){return `./portadas/portada-semana-${numeroSemana(numero)}.jpg`}
 
-const actual=episodios[SEMANA_ACTUAL-1];
-const player=document.getElementById("audioPlayer");
-const audioURL=audio(SEMANA_ACTUAL);
+/*
+============================================================
+RUTAS DE ARCHIVOS
+============================================================
+*/
 
-document.getElementById("currentWeek").textContent=SEMANA_ACTUAL;
-document.getElementById("playerWeek").textContent=SEMANA_ACTUAL;
-document.getElementById("episodeTitle").textContent=actual.titulo;
-document.getElementById("heroBanner").src=banner(SEMANA_ACTUAL);
-document.getElementById("episodeCover").src=portada(SEMANA_ACTUAL);
-document.getElementById("audioPath").textContent=audioURL;
-player.src=audioURL;
-player.load();
+function numeroSemana(numero) {
+  return String(numero).padStart(2, "0");
+}
 
-const list=document.getElementById("episodeList");
+function rutaAudio(numero) {
+  return `./audios/semana-${numeroSemana(numero)}.mp3`;
+}
 
-episodios.forEach(e=>{
-  const available=e.semana<=SEMANA_ACTUAL;
-  const current=e.semana===SEMANA_ACTUAL;
-  const el=document.createElement("div");
-  el.className="episode"+(available?" unlocked":"")+(current?" current":"");
-  const icon=current?"▶":available?"✓":"✦";
-  const status=current?"Disponible esta semana":available?"Disponible":"Próximamente";
-  el.innerHTML=`<div>${icon}</div><div><div class="episode-title">Semana ${e.semana} · ${e.titulo}</div><div class="episode-status">${status}</div></div><div class="episode-number">${e.semana}</div>`;
-  list.appendChild(el);
+function rutaBanner(numero) {
+  return `./banners/banner-semana-${numeroSemana(numero)}.jpg`;
+}
+
+function rutaPortada(numero) {
+  return `./portadas/portada-semana-${numeroSemana(numero)}.jpg`;
+}
+
+
+/*
+============================================================
+ELEMENTOS DE LA PÁGINA
+============================================================
+*/
+
+const player = document.getElementById("audioPlayer");
+const audioError = document.getElementById("audioError");
+const audioPath = document.getElementById("audioPath");
+const episodeTitle = document.getElementById("episodeTitle");
+const episodeCover = document.getElementById("episodeCover");
+const playerWeek = document.getElementById("playerWeek");
+const heroBanner = document.getElementById("heroBanner");
+const currentWeek = document.getElementById("currentWeek");
+
+
+/*
+============================================================
+CARGAR EPISODIO
+============================================================
+
+Esta función permite cambiar entre cualquier semana
+que ya esté disponible.
+*/
+
+function cargarEpisodio(numero) {
+
+  const episodio = episodios.find(
+    e => e.semana === numero
+  );
+
+  if (!episodio) return;
+
+  // Evitar que se pueda cargar una semana futura.
+  if (numero > SEMANA_ACTUAL) return;
+
+  episodeTitle.textContent = episodio.titulo;
+  playerWeek.textContent = numero;
+
+  episodeCover.src = rutaPortada(numero);
+
+  player.src = rutaAudio(numero);
+
+  audioPath.textContent = rutaAudio(numero);
+
+  audioError.style.display = "none";
+
+  player.load();
+
+  // Llevar suavemente al reproductor.
+  document.querySelector(".player-card").scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
+}
+
+
+/*
+============================================================
+SEMANA ACTUAL
+============================================================
+*/
+
+currentWeek.textContent = SEMANA_ACTUAL;
+
+
+/*
+============================================================
+LISTA DE EPISODIOS
+============================================================
+*/
+
+const lista = document.getElementById("episodeList");
+
+episodios.forEach(episodio => {
+
+  const disponible =
+    episodio.semana <= SEMANA_ACTUAL;
+
+  const actual =
+    episodio.semana === SEMANA_ACTUAL;
+
+  const elemento =
+    document.createElement("div");
+
+  elemento.className =
+    "episode" +
+    (disponible ? " available" : "") +
+    (actual ? " current" : "");
+
+  let icono;
+  let estado;
+  let accion;
+
+  if (actual) {
+
+    icono = "▶";
+    estado = "Disponible esta semana";
+    accion = "▶";
+
+  } else if (disponible) {
+
+    icono = "✓";
+    estado = "Disponible";
+    accion = "▶";
+
+  } else {
+
+    icono = "✦";
+    estado = "Próximamente";
+    accion = "🔒";
+  }
+
+  elemento.innerHTML = `
+    <div>${icono}</div>
+
+    <div>
+      <div class="episode-title">
+        Semana ${episodio.semana} · ${episodio.titulo}
+      </div>
+
+      <div class="episode-status">
+        ${estado}
+      </div>
+    </div>
+
+    <div class="episode-action">
+      ${accion}
+    </div>
+  `;
+
+
+  /*
+  Las semanas disponibles pueden seleccionarse.
+  Las futuras no hacen nada.
+  */
+
+  if (disponible) {
+
+    elemento.addEventListener("click", () => {
+
+      cargarEpisodio(episodio.semana);
+
+      // Quitar la selección visual anterior.
+      document
+        .querySelectorAll(".episode.current")
+        .forEach(el => {
+          el.classList.remove("current");
+        });
+
+      // Marcar la semana seleccionada.
+      elemento.classList.add("current");
+    });
+
+  }
+
+  lista.appendChild(elemento);
+
 });
 
-player.addEventListener("error",()=>{
-  const url=new URL(audioURL,document.baseURI).href;
-  const box=document.getElementById("audioError");
-  box.style.display="block";
-  box.textContent="No se pudo cargar el audio. URL intentada: "+url;
+
+/*
+============================================================
+CARGAR LA SEMANA ACTUAL AL ABRIR
+============================================================
+*/
+
+cargarEpisodio(SEMANA_ACTUAL);
+
+
+/*
+============================================================
+ERRORES DEL AUDIO
+============================================================
+*/
+
+player.addEventListener("error", () => {
+
+  const url =
+    new URL(
+      player.src,
+      document.baseURI
+    ).href;
+
+  audioError.style.display = "block";
+
+  audioError.textContent =
+    "No se pudo cargar el audio. URL intentada: " +
+    url;
 });
 
-player.addEventListener("loadedmetadata",()=>{
-  document.getElementById("audioError").style.display="none";
-});
+
+player.addEventListener(
+  "loadedmetadata",
+  () => {
+    audioError.style.display = "none";
+  }
+);
+
 </script>
+
 </body>
 </html>
+'''
+
+out = Path("/mnt/data/index-fruto-semana-2.html")
+out.write_text(html, encoding="utf-8")
+print(f"Archivo listo: {out}")
