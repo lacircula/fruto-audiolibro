@@ -1,6 +1,4 @@
-from pathlib import Path
-
-html = r'''<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -345,7 +343,7 @@ audio{
   <img
     id="heroBanner"
     class="hero-banner"
-    src="./banners/banner-semana-02.jpg"
+    src="./banners/banner-semana-04.jpg"
     alt="Banner de Fruto"
   >
 
@@ -363,7 +361,7 @@ audio{
     </p>
 
     <div class="week-badge">
-      SEMANA <span id="currentWeek">2</span> · 15
+      SEMANA <span id="currentWeek">4</span> · 15
     </div>
   </div>
 </section>
@@ -385,7 +383,7 @@ audio{
     <img
       id="episodeCover"
       class="cover"
-      src="./portadas/portada-semana-02.jpg"
+      src="./portadas/portada-semana-04.jpg"
       alt="Portada del episodio"
     >
   </div>
@@ -393,10 +391,10 @@ audio{
   <div class="player-info">
 
     <div class="episode-label">
-      Capítulo · Semana <span id="playerWeek">2</span>
+      Capítulo · Semana <span id="playerWeek">4</span>
     </div>
 
-    <h2 id="episodeTitle">Semana 2</h2>
+    <h2 id="episodeTitle">Semana 4</h2>
 
     <p class="player-intro">
       Ponte cómoda, dale play y deja que la historia encuentre su propio ritmo.
@@ -712,8 +710,3 @@ player.addEventListener(
 
 </body>
 </html>
-'''
-
-out = Path("/mnt/data/index-fruto-semana-2.html")
-out.write_text(html, encoding="utf-8")
-print(f"Archivo listo: {out}")
