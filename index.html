@@ -543,11 +543,21 @@ function cargarEpisodio(numero) {
   // Evitar que se pueda cargar una semana futura.
   if (numero > SEMANA_ACTUAL) return;
 
+  // Actualizar los datos visuales y el audio del capítulo seleccionado.
   episodeTitle.textContent = episodio.titulo;
   playerWeek.textContent = numero;
 
-  episodeCover.src = rutaPortada(numero);
+  // Cambiar la portada según la semana seleccionada.
+  const portada = rutaPortada(numero);
+  episodeCover.onerror = () => {
+    episodeCover.onerror = null;
+    episodeCover.alt = `No se encontró la portada de la semana ${numero}`;
+    console.warn("No se encontró la portada:", portada);
+  };
+  episodeCover.alt = `Portada de Fruto · Semana ${numero}`;
+  episodeCover.src = portada;
 
+  // Cargar el audio correspondiente.
   player.src = rutaAudio(numero);
 
   audioPath.textContent = rutaAudio(numero);
